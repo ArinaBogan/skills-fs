@@ -6,6 +6,13 @@ function getAllSkills() {
   return data;
 }
 
+function getSkillById(id) {
+  const data = JSON.parse(fs.readFileSync(path));
+  const filtered = data.filter(el => el.id == id);
+  if (!filtered.length) throw new Error('this id is not found');
+  return filtered;
+}
+
 function createSkill(title) {
   const data = JSON.parse(fs.readFileSync(path));
   const filtered = data.filter(el => el.title == title);
@@ -26,4 +33,11 @@ function updateSkill(id, title) {
   return filtered;
 }
 
-module.exports = { getAllSkills, createSkill, updateSkill };
+function deleteSkillById(id) {
+  const data = JSON.parse(fs.readFileSync(path));
+  const filtered = data.filter(el => el.id != id);
+  if (filtered.length == data.length) throw new Error('this id is not found');
+  return filtered;
+}
+
+module.exports = { getAllSkills, getSkillById, createSkill, updateSkill, deleteSkillById };
